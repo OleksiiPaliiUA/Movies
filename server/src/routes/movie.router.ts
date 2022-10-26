@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import MovieController from "../controllers/movie.controller";
 
-const router = Router();
+const router: Router = Router();
 
 router.post("/movie", MovieController.createMovie);
 router.put("/movie/:id", MovieController.updateMovie);

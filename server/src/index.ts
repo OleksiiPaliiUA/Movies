@@ -7,6 +7,7 @@ import * as cookieParser from "cookie-parser";
 
 import { logger } from "./middleware/logger";
 import errorHandler from "./middleware/errorHandler";
+import corsOptions from "./config/corsOptions";
 import db from "./db";
 import movieRouter from "./routes/movie.router";
 import userRouter from "./routes/user.router";
@@ -18,7 +19,7 @@ const PORT = Number(process.env.PORT) || 5000;
 
 app.use(logger);
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
 

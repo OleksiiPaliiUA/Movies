@@ -13,7 +13,7 @@ const errorHandler = (
   );
   console.log(err.stack);
 
-  const status = res.statusCode ? res.statusCode : 500;
+  const status: number = res.statusCode ? res.statusCode : 500;
   res.status(status);
   res.json({ message: err.message });
 };

@@ -4,7 +4,7 @@ import User from "../models/user.model";
 import { body as userBody } from "../types/user.body";
 
 export default class UserRepository {
-  static create(body: userBody) {
+  static create(body: userBody): any {
     return new Promise(function (resolve, reject) {
       if (!("passwordConfirm" in body)) {
         resolve({
@@ -32,16 +32,20 @@ export default class UserRepository {
             });
           })
           .catch((error) => {
+            const errorMessage =
+              error.errors[0].type == "unique violation"
+                ? "Email already exists!"
+                : error;
             resolve({
               success: false,
-              error,
+              errorMessage,
               message: "User not created!",
             });
           });
       });
     });
   }
-  static update(condition: any, body: userBody) {
+  static update(condition: any, body: userBody): any {
     const { password, ...data } = body;
     return new Promise(async function (resolve, reject) {
       User.update(
@@ -72,7 +76,7 @@ export default class UserRepository {
         });
     });
   }
-  static delete(condition: any) {
+  static delete(condition: any): any {
     return new Promise(function (resolve, reject) {
       User.sync().then(() => {
         User.destroy({ where: { uuid: condition } })
@@ -98,7 +102,7 @@ export default class UserRepository {
       });
     });
   }
-  static findOneById(condition: any) {
+  static findOneById(condition: any): any {
     return new Promise(function (resolve, reject) {
       User.sync().then(() => {
         User.findOne({ where: { uuid: condition } })
@@ -124,7 +128,7 @@ export default class UserRepository {
       });
     });
   }
-  static findOneByEmail(condition: string) {
+  static findOneByEmail(condition: string): any {
     return new Promise(function (resolve, reject) {
       User.sync().then(() => {
         User.findOne({ where: { email: condition } })
@@ -150,7 +154,7 @@ export default class UserRepository {
       });
     });
   }
-  static findAll() {
+  static findAll(): any {
     return new Promise(function (resolve, reject) {
       User.sync().then(() => {
         User.findAll()

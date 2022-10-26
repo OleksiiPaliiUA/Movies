@@ -2,7 +2,7 @@ import Movie from "../models/movie.model";
 import { body as movieBody } from "../types/movie.body";
 
 export default class MovieRepository {
-  static create(body: movieBody) {
+  static create(body: movieBody): any {
     return new Promise(function (resolve, reject) {
       const { time, ...data } = body;
       Movie.sync().then(() => {
@@ -27,7 +27,7 @@ export default class MovieRepository {
       });
     });
   }
-  static update(condition: any, body: movieBody) {
+  static update(condition: any, body: movieBody): any {
     return new Promise(function (resolve, reject) {
       const { time, ...data } = body;
       Movie.update(
@@ -58,7 +58,7 @@ export default class MovieRepository {
         });
     });
   }
-  static delete(condition: any) {
+  static delete(condition: any): any {
     return new Promise(function (resolve, reject) {
       Movie.sync().then(() => {
         Movie.destroy({ where: { uuid: condition } })
@@ -84,7 +84,7 @@ export default class MovieRepository {
       });
     });
   }
-  static findOneById(condition: any) {
+  static findOneById(condition: any): any {
     return new Promise(function (resolve, reject) {
       Movie.sync().then(() => {
         Movie.findOne({ where: { uuid: condition } })
@@ -110,7 +110,7 @@ export default class MovieRepository {
       });
     });
   }
-  static findAll() {
+  static findAll(): any {
     return new Promise(function (resolve, reject) {
       Movie.sync().then(() => {
         Movie.findAll()

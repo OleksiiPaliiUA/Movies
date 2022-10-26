@@ -2,9 +2,9 @@ import { Router } from "express";
 
 import UserController from "../controllers/user.controller";
 
-const router = Router();
+const router: Router = Router();
 
-router.post("/user", UserController.createUser);
+router.post("/register", UserController.createUser);
 router.put("/user/:id", UserController.updateUser);
 router.delete("/user/:id", UserController.deleteUser);
 router.get("/user/:id", UserController.getUserById);

@@ -1,65 +1,69 @@
 import { Request, Response } from "express";
 import { response as repoResponse } from "src/types/response";
+import * as asyncHandler from "express-async-handler";
 import MovieRepository from "../repositories/movie.repository";
 
 export default class MovieController {
-  static createMovie(req: Request, res: Response) {
-    if (!req.body) {
-      return res.status(400).json({
+  static createMovie = asyncHandler(async (req: Request, res: Response) => {
+    if (Object.keys(req.body).length === 0) {
+      res.status(400).json({
         success: false,
         error: "You must provide a movie",
       });
-    }
-    MovieRepository.create(req.body).then((response: repoResponse) => {
+    } else {
+      const response: repoResponse = await MovieRepository.create(req.body);
       if (response.success === false) {
-        return res.status(400).json(response);
+        res.status(400).json(response);
+      } else {
+        res.status(201).json(response);
       }
-      return res.status(201).json(response);
-    });
-  }
-  static updateMovie(req: Request, res: Response) {
-    if (!req.body) {
-      return res.status(400).json({
+    }
+  });
+  static updateMovie = asyncHandler(async (req: Request, res: Response) => {
+    if (Object.keys(req.body).length === 0) {
+      res.status(400).json({
         success: false,
         error: "You must provide a body to update",
       });
+    } else {
+      const response: repoResponse = await MovieRepository.update(
+        req.params.id,
+        req.body
+      );
+      if (response.success === false) {
+        res.status(400).json(response);
+      } else {
+        res.status(201).json(response);
+      }
     }
-    MovieRepository.update(req.params.id, req.body).then(
-      (response: repoResponse) => {
-        if (response.success === false) {
-          return res.status(400).json(response);
-        }
-        return res.status(201).json(response);
-      }
+  });
+
+  static deleteMovie = asyncHandler(async (req: Request, res: Response) => {
+    const response: repoResponse = await MovieRepository.delete(req.params.id);
+    if (response.success === false) {
+      res.status(400).json(response);
+    } else {
+      res.status(201).json(response);
+    }
+  });
+
+  static getMovieById = asyncHandler(async (req: Request, res: Response) => {
+    const response: repoResponse = await MovieRepository.findOneById(
+      req.params.id
     );
-  }
+    if (response.success === false) {
+      res.status(400).json(response);
+    } else {
+      res.status(201).json(response);
+    }
+  });
 
-  static deleteMovie(req: Request, res: Response) {
-    MovieRepository.delete(req.params.id).then((response: repoResponse) => {
-      if (response.success === false) {
-        return res.status(400).json(response);
-      }
-      return res.status(201).json(response);
-    });
-  }
-
-  static getMovieById(req: Request, res: Response) {
-    MovieRepository.findOneById(req.params.id).then(
-      (response: repoResponse) => {
-        if (response.success === false) {
-          return res.status(400).json(response);
-        }
-        return res.status(201).json(response);
-      }
-    );
-  }
-
-  static getMovies(req: Request, res: Response) {
-    MovieRepository.findAll().then((response: repoResponse) => {
-      if (response.success === false) {
-        return res.status(400).json(response);
-      }
-      return res.status(201).json(response);
-    });
-  }
+  static getMovies = asyncHandler(async (req: Request, res: Response) => {
+    const response: repoResponse = await MovieRepository.findAll();
+    if (response.success === false) {
+      res.status(400).json(response);
+    } else {
+      res.status(201).json(response);
+    }
+  });
 }

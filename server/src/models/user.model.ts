@@ -16,15 +16,12 @@ export default db.define(
     email: {
       type: STRING,
       allowNull: false,
+      unique: true
     },
     password: {
       type: STRING,
       allowNull: false,
-    },
-    refreshToken: {
-      type: STRING,
-      allowNull: true,
-    },
+    }
   },
   { timestamps: true }
 );
