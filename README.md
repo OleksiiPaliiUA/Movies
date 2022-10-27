@@ -22,6 +22,7 @@ If you have all the prerequisites installed you should verify if your PostgreSQL
 $ cd movies
 $ cd server
 $ npm install
+$ npm run seed (For creating tables/extensions!)
 $ npm run dev (nodemon src/index.ts)
 
 ```

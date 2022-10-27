@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "seed": "ts-node src/db/seed.db.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +22,9 @@
     "@types/node": "^18.11.3",
     "@types/pg": "^8.6.5",
     "@types/sequelize": "^4.28.14",
-    "express-async-handler": "^1.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "eslint": "^8.26.0",
     "ts-node": "^10.9.1"
   },
   "dependencies": {

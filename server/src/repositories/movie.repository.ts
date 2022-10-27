@@ -1,9 +1,10 @@
-import Movie from "../models/movie.model";
-import { body as movieBody } from "../types/movie.body";
+import Movie from '../models/movie.model';
+import { body as movieBody } from '../types/movie.body';
+import { response as repoResponse } from '../types/response';
 
 export default class MovieRepository {
-  static create(body: movieBody): any {
-    return new Promise(function (resolve, reject) {
+  static create(body: movieBody): Promise<repoResponse> {
+    return new Promise(function (resolve: any) {
       const { time, ...data } = body;
       Movie.sync().then(() => {
         Movie.create({
@@ -14,81 +15,81 @@ export default class MovieRepository {
             resolve({
               success: true,
               id: data.dataValues.uuid,
-              message: "Movie created!",
+              message: 'Movie created!',
             });
           })
-          .catch((error) => {
+          .catch((error: object) => {
             resolve({
               success: false,
               error,
-              message: "Movie not created!",
+              message: 'Movie not created!',
             });
           });
       });
     });
   }
-  static update(condition: any, body: movieBody): any {
-    return new Promise(function (resolve, reject) {
+  static update(condition: string, body: movieBody): Promise<repoResponse> {
+    return new Promise(function (resolve: any) {
       const { time, ...data } = body;
       Movie.update(
         {
           ...data,
           time: [time],
         },
-        { where: { uuid: condition } }
+        { where: { uuid: condition } },
       )
-        .then((data: any) => {
-          if (data == 1) {
+        .then((data: object) => {
+          if (data[0] == 1) {
             resolve({
               success: true,
-              message: "Movie updated!",
+              message: 'Movie updated!',
             });
           }
           resolve({
             success: false,
-            message: "Movie not updated!",
+            message: 'Movie not updated!',
           });
         })
-        .catch((error) => {
+        .catch((error: object) => {
           resolve({
             success: false,
             error,
-            message: "Movie not updated!",
+            message: 'Movie not updated!',
           });
         });
     });
   }
-  static delete(condition: any): any {
-    return new Promise(function (resolve, reject) {
+  static delete(condition: string): Promise<repoResponse> {
+    return new Promise(function (resolve: any) {
       Movie.sync().then(() => {
         Movie.destroy({ where: { uuid: condition } })
-          .then((data: any) => {
+          .then((data: number) => {
             if (data == 1) {
               resolve({
                 success: true,
-                message: "Movie deleted!",
+                message: 'Movie deleted!',
               });
             }
             resolve({
               success: false,
-              message: "Movie not deleted!",
+              message: 'Movie not deleted!',
             });
           })
-          .catch((error) => {
+          .catch((error: object) => {
             resolve({
               success: false,
               error,
-              message: "Movie not deleted!",
+              message: 'Movie not deleted!',
             });
           });
       });
     });
   }
-  static findOneById(condition: any): any {
-    return new Promise(function (resolve, reject) {
+  static findOneById(condition: string): Promise<repoResponse> {
+    return new Promise(function (resolve: any) {
       Movie.sync().then(() => {
         Movie.findOne({ where: { uuid: condition } })
-          .then((data: any) => {
+          .then((data: object) => {
             if (data) {
               resolve({
                 success: true,
@@ -97,24 +98,24 @@ export default class MovieRepository {
             }
             resolve({
               success: false,
-              message: "Movie not found!",
+              message: 'Movie not found!',
             });
           })
-          .catch((error) => {
+          .catch((error: object) => {
             resolve({
               success: false,
               error,
-              message: "Movie not found!",
+              message: 'Movie not found!',
             });
           });
       });
     });
   }
-  static findAll(): any {
-    return new Promise(function (resolve, reject) {
+  static findAll(): Promise<repoResponse> {
+    return new Promise(function (resolve: any) {
       Movie.sync().then(() => {
         Movie.findAll()
-          .then((data: any) => {
+          .then((data: object) => {
             if (data) {
               resolve({
                 success: true,
@@ -123,14 +124,14 @@ export default class MovieRepository {
             }
             resolve({
               success: false,
-              message: "Movie not found!",
+              message: 'Movie not found!',
             });
           })
-          .catch((error) => {
+          .catch((error: object) => {
             resolve({
               success: false,
               error,
-              message: "Movie not found!",
+              message: 'Movie not found!',
             });
           });
       });

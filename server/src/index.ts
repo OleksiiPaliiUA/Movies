@@ -1,17 +1,17 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as cors from "cors";
-import * as cookieParser from "cookie-parser";
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
+import * as cookieParser from 'cookie-parser';
 
-import { logger } from "./middleware/logger";
-import errorHandler from "./middleware/errorHandler";
-import corsOptions from "./config/corsOptions";
-import db from "./db";
-import movieRouter from "./routes/movie.router";
-import userRouter from "./routes/user.router";
-import authRouter from "./routes/auth.router";
+import { logger } from './middleware/logger';
+import errorHandler from './middleware/errorHandler';
+import corsOptions from './config/corsOptions';
+import db from './db/connect.db';
+import movieRouter from './routes/movie.router';
+import userRouter from './routes/user.router';
+import authRouter from './routes/auth.router';
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 db.authenticate();
 
-app.use("/api", movieRouter, userRouter, authRouter);
+app.use('/api', movieRouter, userRouter, authRouter);
 
 app.use(errorHandler);
 

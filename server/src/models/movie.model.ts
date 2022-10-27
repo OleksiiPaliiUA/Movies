@@ -1,13 +1,13 @@
-import { UUID, ARRAY, STRING, INTEGER, literal } from "sequelize";
-import db from "../db";
+import { UUID, ARRAY, STRING, INTEGER, literal } from 'sequelize';
+import db from '../db/connect.db';
 
 export default db.define(
-  "movies",
+  'movies',
   {
     uuid: {
       type: UUID,
       primaryKey: true,
-      defaultValue: literal("uuid_generate_v4()"),
+      defaultValue: literal('uuid_generate_v4()'),
     },
     name: {
       type: STRING,
@@ -22,5 +22,5 @@ export default db.define(
       allowNull: true,
     },
   },
-  { timestamps: false }
+  { timestamps: false },
 );

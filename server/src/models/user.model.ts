@@ -1,13 +1,13 @@
-import { UUID, STRING, literal } from "sequelize";
-import db from "../db";
+import { UUID, STRING, literal } from 'sequelize';
+import db from '../db/connect.db';
 
 export default db.define(
-  "users",
+  'users',
   {
     uuid: {
       type: UUID,
       primaryKey: true,
-      defaultValue: literal("uuid_generate_v4()"),
+      defaultValue: literal('uuid_generate_v4()'),
     },
     fullName: {
       type: STRING,
@@ -16,12 +16,12 @@ export default db.define(
     email: {
       type: STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     password: {
       type: STRING,
       allowNull: false,
-    }
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
